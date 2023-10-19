@@ -4,7 +4,7 @@
 
 #include <crow/json.h>
 
-// Define a structure to store the packet data
+// Defining a structure to store the packet data
 struct PacketData {
     std::string uri;
     std::string method;
@@ -16,6 +16,6 @@ class VerifyPath {
 public:
     bool verify(const crow::json::rvalue& json_data, PacketData& packet);
 
-    // You can also add more functions or methods as needed
+   
 };
 
