@@ -30,16 +30,16 @@ int main() {
 
 	//recieve packets from the uplink/downlink in the ground
 	CROW_ROUTE(app, "/UD_Ground_Recieve").methods(HTTPMethod::Post, HTTPMethod::Get, HTTPMethod::Put) //to get the index.html 
-		([](const crow::request& req, crow::response& res){
+		([](const crow::request& req, crow::response& res) {
 
 		string post = "POST";
 		string method = method_name(req.method);
 
-		int resultPost = post.compare(method); 
+		int resultPost = post.compare(method);
 
-		if (resultPost == 0){
+		if (resultPost == 0) {
 			crow::json::rvalue json_data = crow::json::load(req.body);
-			
+
 			//check time
 
 			//if of time reponsed with 503
@@ -55,14 +55,14 @@ int main() {
 			//create a veriy_path object
 			//call a method in the object and send it the json_data to verify path
 
-			ostringstream contents; 
-			res.code = 200; 
-			res.write(contents.str()); 
+			ostringstream contents;
+			res.code = 200;
+			res.write(contents.str());
 		}
 		else {
-			ostringstream contents; 
-			res.code = 400; 
-			res.write(contents.str()); 
+			ostringstream contents;
+			res.code = 400;
+			res.write(contents.str());
 		}
 		res.end();
 			});
@@ -75,3 +75,7 @@ int main() {
 	app.port(23500).multithreaded().run();
 	return 1;
 }
+
+
+
+
