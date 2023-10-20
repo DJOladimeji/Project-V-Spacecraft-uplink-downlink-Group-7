@@ -3,7 +3,6 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <curl/curl.h>
-#include "crow.h"
 #include "crow_all.h"
 #include <map>
 
@@ -27,7 +26,8 @@ void sendJsonPacketToUri(const crow::json::rvalue& jsonPacket)
     CURLcode res;
 
     curl = curl_easy_init();
-    if (curl) {
+    if (curl) 
+    {
         // Check if the "URI" key exists in the JSON packet
         if (jsonPacket.has("URI")) {
             // Extract the URI from the JSON packet
@@ -35,7 +35,7 @@ void sendJsonPacketToUri(const crow::json::rvalue& jsonPacket)
 
             // Set the cURL options
             curl_easy_setopt(curl, CURLOPT_URL, uri.c_str());
-            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, NULL);  // Optional headers
+            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, NULL);
 
             // Convert the JSON packet back to a string for the request body
             string jsonPacketString = jsonPacket.operator std::string();
@@ -66,11 +66,13 @@ void sendJsonPacketToUri(const crow::json::rvalue& jsonPacket)
             // Clean up cURL
             curl_easy_cleanup(curl);
         }
-        else {
+        else 
+        {
             std::cerr << "URI not found in the JSON packet." << std::endl;
         }
     }
-    else {
+    else 
+    {
         std::cerr << "cURL initialization failed." << std::endl;
     }
 }
