@@ -3,9 +3,14 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <curl/curl.h>
+#include "crow.h"
+#include "crow_all.h"
+#include <map>
 
 using json = nlohmann::json;
+using namespace crow;
 using namespace std;
+
 
 // Callback function to write response data from cURL
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) 
@@ -15,27 +20,30 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
     return totalSize;
 }
 
-void sendJsonPacketToUri(const std::string& jsonPacket) {
+
+void sendJsonPacketToUri(const crow::json::rvalue& jsonPacket) 
+{
     CURL* curl;
     CURLcode res;
 
     curl = curl_easy_init();
     if (curl) {
-        // Parse the JSON packet
-        json packetData = json::parse(jsonPacket);
+        // Check if the "URI" key exists in the JSON packet
+        if (jsonPacket.has("URI")) {
+            // Extract the URI from the JSON packet
+            const std::string& uri = jsonPacket["URI"].s();
 
-        // Extract the URI from the JSON packet
-        std::string uri = packetData["URI"];
-
-        if (!uri.empty()) {
             // Set the cURL options
             curl_easy_setopt(curl, CURLOPT_URL, uri.c_str());
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, NULL);  // Optional headers
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonPacket.c_str());
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPacket.length());
+
+            // Convert the JSON packet back to a string for the request body
+            string jsonPacketString = jsonPacket.operator std::string();
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonPacketString.c_str());
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, jsonPacketString.length());
 
             // Response data will be stored in this string
-            std::string response_data;
+            string response_data;
 
             // Set the callback function to handle the response
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -45,12 +53,14 @@ void sendJsonPacketToUri(const std::string& jsonPacket) {
             res = curl_easy_perform(curl);
 
             // Check for errors
-            if (res != CURLE_OK) {
+            if (res != CURLE_OK) 
+            {
                 std::cerr << "cURL failed: " << curl_easy_strerror(res) << std::endl;
             }
-            else {
-                std::cout << "Packet sent successfully to " << uri << std::endl;
-                std::cout << "Response: " << response_data << std::endl;
+            else 
+            {
+                cout << "Packet sent successfully to " << uri << std::endl;
+                cout << "Response: " << response_data << std::endl;
             }
 
             // Clean up cURL
