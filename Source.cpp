@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "readFromFile.h"
-
+#include "Verify_Path.h"
 #include <string>
 #include <vector>
 #include "string.h" 
@@ -31,7 +31,7 @@ int main() {
 
 	crow::SimpleApp app;
 
-	CROW_ROUTE(app, "/UD_Ground_Receive").methods(HTTPMethod::Post, HTTPMethod::Get, HTTPMethod::Put)
+	CROW_ROUTE(app, "/UD_Ground_Receive").methods(HTTPMethod::Post, HTTPMethod::Get, HTTPMethod::Put) 
 		([](const crow::request& req, crow::response& res) {
 		string post = "POST"; 
 		string method = method_name(req.method);
@@ -64,10 +64,10 @@ int main() {
 			cout << "====================================" << endl;
 			cout << endl;
 
-			//create a veriy_path object
-			// VerifyPath verify;
-			// PacketData packet;
-			// verify(json_data, packet);
+			//create a verify_path object
+			VerifyPath verify; 
+			PacketData packet; 
+			bool verified = verify.verify(json_data, packet); 
 			//call a method in the object and send it the json_data to verify path
 
 			ostringstream contents;
@@ -120,11 +120,11 @@ int main() {
 			cout << "====================================" << endl;
 			cout << endl; 
 
-			//create a send_Route_Ground object 
-			//VerifyPath verify;
-			//PacketData packet;
-			//verify(json_data, packet);
-			//call a method in the object and send it the json_data to ground
+			//create a verify_path object
+			VerifyPath verify; 
+			PacketData packet; 
+			bool verified = verify.verify(json_data, packet); 
+			//call a method in the object and send it the json_data to verify path
 
 			ostringstream contents;
 			res.code = 200;
