@@ -62,6 +62,9 @@ int main() {
 			cout << endl;
 
 			//create a veriy_path object
+			// VerifyPath verify;
+			// PacketData packet;
+			// verify(json_data, packet);
 			//call a method in the object and send it the json_data to verify path
 
 			ostringstream contents;
@@ -114,6 +117,9 @@ int main() {
 			cout << endl; 
 
 			//create a send_Route_Ground object 
+			//VerifyPath verify;
+			//PacketData packet;
+			//verify(json_data, packet);
 			//call a method in the object and send it the json_data to ground
 
 			ostringstream contents;
