@@ -6,9 +6,9 @@
 bool VerifyPath::verify(const crow::json::rvalue& json_data, PacketData& packet) {
     // Checking if the "URI" and "method" fields exist in the JSON data
     if (json_data.has("URI") && json_data["URI"].t() == crow::json::type::String &&
-        json_data.has("method") && json_data["method"].t() == crow::json::type::String) {
+        json_data.has("route") && json_data["route"].t() == crow::json::type::String) {
         packet.uri = json_data["URI"].s();
-        packet.method = json_data["method"].s();
+        packet.method = json_data["route"].s();
 
         // Extracting and storing the path from the URI
         size_t uriPathDelimiter = packet.uri.find('?');
