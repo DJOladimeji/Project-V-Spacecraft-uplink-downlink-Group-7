@@ -17,7 +17,7 @@ using namespace crow;
 
 #include "Buffer.h"
 
-int main() {
+int main() { 
 	cout << "======================================================" << endl;
 	cout << "Welcome to the space Spacecrafts Uplink/Downlink" << endl;
 	cout << "======================================================" << endl;
@@ -31,8 +31,9 @@ int main() {
 
 	crow::SimpleApp app;
 
-
-		string post = "POST";
+	CROW_ROUTE(app, "/UD_Ground_Receive").methods(HTTPMethod::Post, HTTPMethod::Get, HTTPMethod::Put)
+		([](const crow::request& req, crow::response& res) {
+		string post = "POST"; 
 		string method = method_name(req.method);
 
 		int resultPost = post.compare(method);
