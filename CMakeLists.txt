@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.8)
 
 project(SC_Uplink_Downlink)
 
@@ -8,7 +8,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 find_package(Threads)
 find_package(Crow CONFIG REQUIRED)
-
 
 include_directories(${Boost_INCLUDE_DIRS})
 add_executable(SC_Uplink_Downlink Source.cpp)
