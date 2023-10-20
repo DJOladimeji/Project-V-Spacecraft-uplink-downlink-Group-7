@@ -27,9 +27,7 @@ int main() {
 
 	crow::SimpleApp app;
 
-	//recieve packets from the uplink/downlink in the ground 
-	CROW_ROUTE(app, "/UD_Ground_Receive").methods(HTTPMethod::Post, HTTPMethod::Get, HTTPMethod::Put)
-		([](const crow::request& req, crow::response& res) {
+
 		string post = "POST";
 		string method = method_name(req.method);
 
@@ -75,6 +73,7 @@ int main() {
 			ostringstream contents;
 			res.code = 400;
 			res.write(contents.str());
+
 		}
 		res.end();
 			});
@@ -130,6 +129,7 @@ int main() {
 			ostringstream contents;
 			res.code = 400;
 			res.write(contents.str());
+
 		}
 		res.end();
 			});
@@ -142,4 +142,5 @@ int main() {
 	app.port(23500).multithreaded().run();
 	return 1;
 }
+
 
