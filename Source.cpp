@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "crow_all.h" 
+#include "readFromFile.h"
 #include <string>
 #include <vector>
 #include "string.h" 
@@ -17,6 +18,7 @@ int main() {
 	cout << "======================================================" << endl;
 
 	//create a read from file object 
+	readFromFile(); 
 
 	//the read from file object will call a methods to read the IP address from file
 
