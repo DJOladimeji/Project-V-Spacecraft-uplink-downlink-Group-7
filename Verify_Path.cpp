@@ -12,7 +12,7 @@ bool VerifyPath::verify(const crow::json::rvalue& json_data, PacketData& packet)
 
         // Extracting and storing the path from the URI
         size_t uriPathDelimiter = packet.uri.find('?');
-        if (uriPathDelimiter != std::string::npos) {
+        if (uriPathDelimiter != std::string::npos) { 
             packet.path = packet.uri.substr(0, uriPathDelimiter);
         }
         else {
